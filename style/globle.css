@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+    height: 101px;
+}
