@@ -8,6 +8,10 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  signInWithPhoneNumber,
+  signInWithCredential,
+  RecaptchaVerifier,
+  PhoneAuthProvider,
 } from "firebase/auth";
 import {
   initializeFirestore,
@@ -87,6 +91,35 @@ const registerWithEmailAndPassword = async (event,name, email, password) => {
   }
 };
 
+const registerWithPhoneNumber = (phoneNumber) => {
+  const recaptchaContainer = document.getElementById('recaptcha-container');
+  const recaptchaVerifier = new RecaptchaVerifier(recaptchaContainer);
+  signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+    .then(confirmationResult => {
+      // Store confirmation result in local storage (this might not be a good practice)
+      localStorage.setItem("otp", JSON.stringify(confirmationResult));
+    })
+    .catch(error => {
+      console.error(error);
+      alert("Error sending SMS verification code.");
+    });
+};
+
+
+const registerWithCredential = (verificationCode) => {
+  const verificationId = localStorage.getItem('otp')
+  let user;
+  const credential = PhoneAuthProvider.credential(verificationId.verificationId, verificationCode);
+ signInWithCredential(credential)
+    .then(authUser => {
+      user=authUser;
+    })
+    .catch(error => {
+      alert(error)
+    });
+    return {user}
+};
+
 const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
@@ -123,4 +156,6 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
+  registerWithCredential,
+  registerWithPhoneNumber
 };
