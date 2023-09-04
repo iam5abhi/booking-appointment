@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { UpdatePassword } from '../../../components/firebase'
+import { UpdatePassword } from '../../../components/firebase/Firebase'
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute'
 
 const ChangePassword = () => {

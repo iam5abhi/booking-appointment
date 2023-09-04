@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import UserPrivateRoute from '../PrivateRoute/UserPrivateRoute';
 
 const Home = () => {
     const today = new Date().toISOString().split('T')[0];
@@ -77,4 +78,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default UserPrivateRoute(Home)

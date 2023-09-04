@@ -8,13 +8,8 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
-  signInWithPhoneNumber,
-  signInWithCredential,
-  RecaptchaVerifier,
-  PhoneAuthProvider,
 } from "firebase/auth";
 import {
-  initializeFirestore,
   getFirestore,
   query,
   getDocs,
@@ -27,16 +22,16 @@ function initializeAppIfNecessary() {
   try {
     return getApp();
   } catch (any) {
-    const firebaseConfig = {
-    apiKey: "AIzaSyB0Q_7uZ4ZkoEyA6JNztGftrLya1aRzfYw",
-    authDomain: "new-property-de8a9.firebaseapp.com",
-    projectId: "new-property-de8a9",
-    storageBucket: "new-property-de8a9.appspot.com",
-    messagingSenderId: "1030223470618",
-    appId: "1:1030223470618:web:b6ec195a109179a03b31a3",
-    measurementId: "G-7BWS5RJGZ5"
-    };
-    return initializeApp(firebaseConfig);
+      const AdminConfig = {
+        apiKey: "AIzaSyB0Q_7uZ4ZkoEyA6JNztGftrLya1aRzfYw",
+        authDomain: "new-property-de8a9.firebaseapp.com",
+        projectId: "new-property-de8a9",
+        storageBucket: "new-property-de8a9.appspot.com",
+        messagingSenderId: "1030223470618",
+        appId: "1:1030223470618:web:b6ec195a109179a03b31a3",
+        measurementId: "G-7BWS5RJGZ5"
+      }
+     return initializeApp(AdminConfig,"adminApp"); 
   }
 }
 
@@ -91,35 +86,6 @@ const registerWithEmailAndPassword = async (event,name, email, password) => {
   }
 };
 
-const registerWithPhoneNumber = (phoneNumber) => {
-  const recaptchaContainer = document.getElementById('recaptcha-container');
-  const recaptchaVerifier = new RecaptchaVerifier(recaptchaContainer);
-  signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
-    .then(confirmationResult => {
-      // Store confirmation result in local storage (this might not be a good practice)
-      localStorage.setItem("otp", JSON.stringify(confirmationResult));
-    })
-    .catch(error => {
-      console.error(error);
-      alert("Error sending SMS verification code.");
-    });
-};
-
-
-const registerWithCredential = (verificationCode) => {
-  const verificationId = localStorage.getItem('otp')
-  let user;
-  const credential = PhoneAuthProvider.credential(verificationId.verificationId, verificationCode);
- signInWithCredential(credential)
-    .then(authUser => {
-      user=authUser;
-    })
-    .catch(error => {
-      alert(error)
-    });
-    return {user}
-};
-
 const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
@@ -156,6 +122,4 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
-  registerWithCredential,
-  registerWithPhoneNumber
 };

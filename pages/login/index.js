@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { auth, logInWithEmailAndPassword } from "../../components/firebase/index";
+import { auth, logInWithEmailAndPassword } from "../../components/firebase/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const Login = () => {

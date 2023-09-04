@@ -1,25 +1,25 @@
-import { auth } from "../components/firebase/Firebase";
+import { userAuth } from "../components/firebase/UserFirebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from 'next/router';
 
-const PrivateRoute = (WrappedComponent) => {
-const PrivateRoute = (props) => {
+const UserPrivateRoute = (WrappedComponent) => {
+const UserPrivateRoute = (props) => {
     const Router = useRouter()
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading, error] = useAuthState(userAuth);
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
     if (!user) {
-        Router.push('/login');
+        Router.push('/user-login');
         return null;
     }
 
     return <WrappedComponent {...props} />;
 };
 
-PrivateRoute.getInitialProps = async (ctx) => {
+UserPrivateRoute.getInitialProps = async (ctx) => {
     const wrappedComponentInitialProps = WrappedComponent.getInitialProps
         ? await WrappedComponent.getInitialProps(ctx)
         : {};
@@ -27,7 +27,7 @@ PrivateRoute.getInitialProps = async (ctx) => {
        return { ...wrappedComponentInitialProps };
     };
 
-   return PrivateRoute;
+   return UserPrivateRoute;
 };
 
-export default PrivateRoute;
+export default UserPrivateRoute;

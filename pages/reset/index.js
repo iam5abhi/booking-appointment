@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { auth, sendPasswordReset } from "../../components/firebase/index";
+import { auth, sendPasswordReset } from "../../components/firebase/Firebase";
 
 
 function Reset() {

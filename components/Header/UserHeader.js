@@ -1,16 +1,15 @@
 import Link from 'next/link'
 import React from 'react'
-import { auth, logout } from "../firebase/Firebase";
+import { userAuth, logout } from "../firebase/UserFirebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from 'next/router';
 
-const Header = () => {
-    const [user] = useAuthState(auth);
+const UserHeader = () => {
+    const [user] = useAuthState(userAuth);
     const router = useRouter()
-
     return (
         <>
-        {router.pathname.includes('/admin')?
+        {!router.pathname.includes('/admin')?
         <nav className="bg-white border-gray-200 shadow">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href="/" className="flex items-center">
@@ -31,14 +30,11 @@ const Header = () => {
                     <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0 ">
                     {!user ? 
                         <li>
-                            <Link href="/login" className="block py-2 pl-3 pr-4 text-violet-950  rounded md:bg-transparent md:p-0 " aria-current="page">Login</Link>
+                            <Link href="/user-login" className="block py-2 pl-3 pr-4 text-violet-950  rounded md:bg-transparent md:p-0 " aria-current="page">Login</Link>
                         </li> 
                         : <>
                         <li>
-                            <Link href="/admin" className="block py-2 pl-3 pr-4 text-violet-950  rounded md:bg-transparent md:p-0 " aria-current="page">Leads</Link>
-                        </li>
-                        <li>
-                            <Link href="/admin/change-password" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-violet-950 md:p-0  ">Change Password</Link>
+                            <Link href="/change-password" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-violet-950 md:p-0  ">Change Password</Link>
                         </li>
                         </>
                     }   
@@ -51,4 +47,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default UserHeader
