@@ -22,7 +22,7 @@ function initializeAppIfNecessary() {
         appId: "1:267098964139:web:232255884797f7a5ed37ee",
         measurementId: "G-GGEGPPRL6N",
     };
-    return initializeApp(firebaseConfig,"userApp");
+    return initializeApp(firebaseConfig,"user-property");
   }
 }
 
