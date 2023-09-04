@@ -17,7 +17,7 @@ const App = () => {
 
   function onCaptchVerify() {
     if (typeof window !== "undefined" && !window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(userAuth, 'recaptcha-container', {size: "invisible",});
+      window.recaptchaVerifier = new RecaptchaVerifier(userAuth, 'recaptcha-container', {size: "invisible",}).verify();
     }
   }
 
