@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import UserPrivateRoute from '../PrivateRoute/UserPrivateRoute';
+import { userAuth } from "../components/firebase/UserFirebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Home = () => {
     const today = new Date().toISOString().split('T')[0];
@@ -7,9 +9,10 @@ const Home = () => {
     maxDate.setDate(maxDate.getDate() + 5);
     const maxDateString = maxDate.toISOString().split('T')[0];
     const [queries,setQueries]=useState({date:'',time:[]})
-    const [formData,setFormData]=useState({date:'',time:''});
+    const [formData,setFormData]=useState({date:'',time:'',name:''});
+    const [user, loading, error] = useAuthState(userAuth);
 
-
+    console.log(user)
     const getQueriesData = (event)=>{
         fetch("/api/filter/filter", { 
             method: "POST",
@@ -30,7 +33,7 @@ const Home = () => {
     }
 
     const BookAppointment = ()=>{
-        if(!formData.date || !formData.time){
+        if(!formData.date || !formData.time || !formData.name){
             alert("please select date and time ? ")
         }else{
             fetch("/api/appointment/book-appointment", { 
@@ -38,7 +41,7 @@ const Home = () => {
                 headers: {
                   "Content-Type": "application/json",
                 },
-              body: JSON.stringify(formData),
+              body: JSON.stringify({...formData,phoneNumber:user.phoneNumber}),
               }).then((res) => {window.location.reload()}
               ).catch((error) => {alert(error,"something want wrong")})
         }
@@ -56,6 +59,9 @@ const Home = () => {
                             </div>
                             <input autofocus="autofocus" max={maxDateString} min={today} onChange={getQueriesData} type="date" className="datepicker-input block w-full rounded-lg border border-emerald-300 bg-emerald-50 p-2.5 pl-10 text-emerald-800 outline-none ring-opacity-30 placeholder:text-emerald-800 focus:ring focus:ring-emerald-300 sm:text-sm" placeholder="Select date" />
                         </div>
+                    </div>
+                    <div className='mt-4 w-56'>
+                        <input type="text" onChange={(event)=>setFormData({...formData,name:event.target.value})} className="block w-full rounded-lg border border-emerald-300 bg-emerald-50 p-2.5 text-emerald-800 outline-none ring-opacity-30 placeholder:text-emerald-800 focus:ring focus:ring-emerald-300 sm:text-sm" placeholder="Enter Name" />
                     </div>
                     {formData.date?
                     <div className>
