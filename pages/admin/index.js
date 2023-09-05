@@ -9,18 +9,6 @@ const Home = () => {
     const [contact,setContact]=useState()
     const [open,setOpen] =useState(false)
     
-    const deleteContacts = (id) => {
-        fetch("/api/property/delete-property", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: id }),
-        }).then(() => {
-            getCategotyData()
-            alert("delete Succfully")
-        });
-    }; 
     
     // const statsContacts = (data,status) => {
     //     fetch("/api/property/status-property", {
@@ -54,7 +42,7 @@ const Home = () => {
             <div className="py-8">
                 <div className='px-2 flex justify-between'>
                     <h2 className="text-2xl font-semibold leading-tight">Appointment</h2>
-                    <Link href="/admin/property/add" ><h2 className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Add Appointment</h2></Link>
+                    {/* <Link href="/admin/property/add" ><h2 className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Add Appointment</h2></Link> */}
                     <h2 onClick={()=>setOpen(true)} className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Broadcast</h2>
                 </div>
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -99,10 +87,10 @@ const Home = () => {
                                             <span aria-hidden className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full" />
                                             <span className="relative">Update</span>
                                         </span>
-                                        <span onClick={()=>deleteContacts(data.id)} className={`relative inline-block px-3 py-1 font-semibold text-red-800 leading-tight`}>
+                                        {/* <span onClick={()=>deleteContacts(data.id)} className={`relative inline-block px-3 py-1 font-semibold text-red-800 leading-tight`}>
                                             <span aria-hidden className={`absolute inset-0 bg-red-200 opacity-50 rounded-full`} />
                                             <span className="relative">Delete</span>
-                                        </span>
+                                        </span> */}
                                     </td>
                                 </tr>
                                 })}

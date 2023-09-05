@@ -32,15 +32,16 @@ const Home = () => {
     const BookAppointment = ()=>{
         if(!formData.date || !formData.time){
             alert("please select date and time ? ")
+        }else{
+            fetch("/api/appointment/book-appointment", { 
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              body: JSON.stringify(formData),
+              }).then((res) => {window.location.reload()}
+              ).catch((error) => {alert(error,"something want wrong")})
         }
-        fetch("/api/appointment/book-appointment", { 
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          body: JSON.stringify(formData),
-          }).then((res) => {window.location.reload()}
-          ).catch((error) => {alert(error,"something want wrong")})
     }
 
     return (
