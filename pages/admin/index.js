@@ -2,10 +2,12 @@ import { useRouter } from 'next/router';
 import React,{useState,useEffect} from 'react'
 import PrivateRoute from '../../PrivateRoute/PrivateRoute';
 import Link from 'next/link';
+import Broadcast from '../../components/Admin/AddQuery/Broadcast';
 
-const Url = () => {
+const Home = () => {
     const router = useRouter();
     const [contact,setContact]=useState()
+    const [open,setOpen] =useState(false)
     
     const deleteContacts = (id) => {
         fetch("/api/property/delete-property", {
@@ -34,7 +36,7 @@ const Url = () => {
     // };
 
     const getCategotyData = ()=>{
-        fetch("/api/property/get-property", { 
+        fetch("/api/appointment/get-appointment", { 
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -51,8 +53,9 @@ const Url = () => {
            <div className="container mx-auto px-4 sm:px-8">
             <div className="py-8">
                 <div className='px-2 flex justify-between'>
-                    <h2 className="text-2xl font-semibold leading-tight">Property</h2>
-                    <Link href="/admin/property/add" ><h2 className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Add Property</h2></Link>
+                    <h2 className="text-2xl font-semibold leading-tight">Appointment</h2>
+                    <Link href="/admin/property/add" ><h2 className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Add Appointment</h2></Link>
+                    <h2 onClick={()=>setOpen(true)} className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Broadcast</h2>
                 </div>
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                     <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
@@ -63,16 +66,13 @@ const Url = () => {
                                        name
                                     </th>
                                     <th className="text-center px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        location
+                                        Date
                                     </th>
                                     <th className="text-center px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Price
+                                        Time
                                     </th>
                                     <th className="text-center px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Price Scure feet
-                                    </th>
-                                    <th className="text-center px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        duration
+                                        Phone Number
                                     </th>
                                     <th className="text-center px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                     Actions
@@ -83,19 +83,16 @@ const Url = () => {
                                 {!contact?"loading....":contact.map((data,index)=>{
                                     return <tr key={index+1}>
                                     <td className="px-5 py-5 bg-white text-sm">
-                                        {data.ProjectName}  
+                                        {data.name}  
                                     </td>
                                     <td className="text-center px-5 py-5 bg-white text-sm">
-                                        {data.Sector}  
+                                        {data.date}  
                                     </td>
                                     <td className="text-center px-5 py-5 bg-white text-sm">
-                                        {data.PriceStartsfrom}
+                                        {data.time}
                                     </td>
                                     <td className="text-center px-5 py-5 bg-white text-sm">
-                                        {data.PricePerSQFT}
-                                    </td>
-                                    <td className="text-center px-5 py-5 bg-white text-sm">
-                                        {data.AvailableFrom}
+                                        {data.phoneNumber}
                                     </td>
                                     <td className="text-center px-5 py-5 bg-white text-sm">
                                         <span onClick={()=>router.push(`/admin/property/${data.id}`)} className="mr-3 relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
@@ -115,9 +112,9 @@ const Url = () => {
                 </div>
             </div>
         </div>
-
+        {open?<Broadcast open={open} setOpen={setOpen} queries={contact} /> :null}                          
         </>
     )
 }
 
-export default PrivateRoute(Url)
+export default PrivateRoute(Home)

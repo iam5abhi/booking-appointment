@@ -8,7 +8,6 @@ function Broadcast({setOpen,open,queries}) {
   const [formData,setFormData]=useState({firstUrl:'', secondUrl:'',})
   const [urls,setUrls]=useState([])
 
-  console.log(formData,"formData")
 
   const BroadcastHandler = async (event) => {
     event.preventDefault();
