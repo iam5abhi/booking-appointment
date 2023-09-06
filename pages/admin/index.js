@@ -1,15 +1,20 @@
-import { useRouter } from 'next/router';
 import React,{useState,useEffect} from 'react'
 import PrivateRoute from '../../PrivateRoute/PrivateRoute';
-import Link from 'next/link';
 import Broadcast from '../../components/Admin/AddQuery/Broadcast';
+import Status from '../../components/Admin/AddQuery/Status';
 
 const Home = () => {
-    const router = useRouter();
     const [contact,setContact]=useState()
     const [open,setOpen] =useState(false)
+    const [status,setStatus] = useState(false)
+    const [ids,setIds] = useState()
     
-    
+
+    const StatusHandler =(id)=>{
+        setIds(id)
+        setStatus(true)
+    }
+
     // const statsContacts = (data,status) => {
     //     fetch("/api/property/status-property", {
     //       method: "POST",
@@ -63,7 +68,10 @@ const Home = () => {
                                         Phone Number
                                     </th>
                                     <th className="text-center px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                    Actions
+                                        Status
+                                    </th>
+                                    <th className="text-center px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                        Actions
                                     </th>
                                 </tr>
                             </thead>
@@ -83,14 +91,16 @@ const Home = () => {
                                         {data.phoneNumber}
                                     </td>
                                     <td className="text-center px-5 py-5 bg-white text-sm">
-                                        <span onClick={()=>router.push(`/admin/property/${data.id}`)} className="mr-3 relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
-                                            <span aria-hidden className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full" />
-                                            <span className="relative">Update</span>
+                                        <span className={`mr-3 relative inline-block px-3 py-1 font-semibold text-${data.status=="Booked"?"blue":data.status=="Completed"?'green':'red'}-900 leading-tight`}>
+                                            <span aria-hidden className={`absolute inset-0 bg-${data.status=="Booked"?"blue":data.status=="Completed"?'green':'red'}-200 opacity-50 rounded-full`} />
+                                            <span className="relative">{data.status}</span>
                                         </span>
-                                        {/* <span onClick={()=>deleteContacts(data.id)} className={`relative inline-block px-3 py-1 font-semibold text-red-800 leading-tight`}>
-                                            <span aria-hidden className={`absolute inset-0 bg-red-200 opacity-50 rounded-full`} />
-                                            <span className="relative">Delete</span>
-                                        </span> */}
+                                    </td>
+                                    <td onClick={()=>StatusHandler(data.id)} className="cursor-pointer text-center px-5 py-5 bg-white text-sm">
+                                        <span className="mr-3 relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
+                                            <span aria-hidden className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full" />
+                                            <span className="relative">Update Status</span>
+                                        </span>
                                     </td>
                                 </tr>
                                 })}
@@ -101,6 +111,7 @@ const Home = () => {
             </div>
         </div>
         {open?<Broadcast open={open} setOpen={setOpen} queries={contact} /> :null}                          
+        {status?<Status open={status} setOpen={setStatus} id={ids} queries={getCategotyData} /> :null}                          
         </>
     )
 }
