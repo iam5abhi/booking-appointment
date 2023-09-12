@@ -65,7 +65,7 @@ const App = () => {
       // maybe trigger a loadings screen
       return;
     }
-    if (user) router.push('/admin');
+    if (user) router.push('/');
   }, [user, loading]);
 
   return (

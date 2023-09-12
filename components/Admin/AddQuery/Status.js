@@ -1,6 +1,7 @@
 import React, { useState  } from 'react';
 import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { toast, Toaster } from "react-hot-toast";
 
 function Status({setOpen,open,queries,id}) {
   const cancelButtonRef = useRef(null)
@@ -16,8 +17,11 @@ function Status({setOpen,open,queries,id}) {
         },
       body: JSON.stringify({status:formData,id:id}),
       }).then((res) => {
-        setOpen(false) 
-        queries()}
+        toast.success("Update Successfully!");
+        setTimeout(()=>{
+          setOpen(false) 
+          queries()
+        },2000)}
       ).catch((error) => {alert(error,"something want wrong")})
   }
 
@@ -52,6 +56,7 @@ function Status({setOpen,open,queries,id}) {
               <div className="container mx-auto">
                 <div className="col-span-2">
                   <div className=" border-b border-gray-200 rounded">
+                    <Toaster toastOptions={{ duration: 4000 }} />
                       <div className="text-end p-2">
                         <i onClick={() => setOpen(false)} className="fa-solid fa-xmark text-xs font-extrabold bg-gray-400 h-5 leading-5 w-5 z-50 rounded-full text-center text-white"></i>
                       </div>
