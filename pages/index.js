@@ -24,7 +24,7 @@ const Home = () => {
         {data.map((data)=>{
           return <div key={data.id}>
             <div className="grid mb-8 border border-gray-200 rounded-lg shadow-sm md:mb-12 md:grid-cols-2 bg-white">
-                <figure className="flex flex-col items-center justify-center p-4  border-b border-gray-200 rounded-tr-lg ">
+                <figure className="p-4 border-b border-gray-200 rounded-tr-lg ">
                     <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8">
                         <h2 className="text-7xl font-semibold text-gray-900 ">
                             Welcome
@@ -33,31 +33,18 @@ const Home = () => {
                             {data.about}
                         </p>
                     </blockquote>
-                    <div className="grid gap-x-2 md:gap-x-10 grid-cols-2 md:grid-cols-2">
-                        <div className="grid1">
-                            <div className="md:px-14 rounded-full bg-[#F8AF0B] shadow-md">
-                                <div className="md:p-5 py-3 px-20 flex justify-center">
-                                    <a>
-                                        <h5 onClick={() => router.push('/properties/buy')} className="text-white text-xl md:text-3xl font-semibold tracking-tight uppercase">Buy</h5>
+                        <div className="">
+                            <div className="rounded-full bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md max-w-sm">
+                                <div className="md:p-4 p-3">
+                                    <a href="#">
+                                        <h5 onClick={() => router.push('/appointment')} className="text-center text-white text-xl md:text-xl font-semibold tracking-tight uppercase">Book Appointment</h5>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div className="grid2">
-                                <div className="max-w-sm rounded-full bg-[#4216aa] shadow-md">
-                                    <div className="md:p-5 p-3">
-                                        <a href="#">
-                                            <h5 onClick={() => router.push('/properties/lease')} className="text-center text-white text-xl md:text-3xl font-semibold tracking-tight uppercase">Lease</h5>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div />
-                    </div>
                     </figure>
-                <figure className="flex flex-col items-center justify-center p-4 text-center   border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg">
+                <figure className="flex flex-col items-center justify-center p-4 text-center border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg">
                     <figcaption className="flex items-center justify-center">
                         <img className="h-auto m ax-w-full" src="/Images/1png.png" alt="profile picture" />
                     </figcaption>
