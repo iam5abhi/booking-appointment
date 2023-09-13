@@ -3,7 +3,7 @@ import PrivateRoute from '../../PrivateRoute/PrivateRoute';
 import Broadcast from '../../components/Admin/AddQuery/Broadcast';
 import Status from '../../components/Admin/AddQuery/Status';
 
-const Home = () => {
+const Appointment = () => {
     const [contact,setContact]=useState()
     const [open,setOpen] =useState(false)
     const [status,setStatus] = useState(false)
@@ -14,19 +14,6 @@ const Home = () => {
         setIds(id)
         setStatus(true)
     }
-
-    // const statsContacts = (data,status) => {
-    //     fetch("/api/property/status-property", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ data: data , status: status }),
-    //     }).then(() => {
-    //         getCategotyData()
-    //         alert("delete Succfully")
-    //     });
-    // };
 
     const getCategotyData = ()=>{
         fetch("/api/appointment/get-appointment", { 
@@ -47,7 +34,6 @@ const Home = () => {
             <div className="py-8">
                 <div className='px-2 flex justify-between'>
                     <h2 className="text-2xl font-semibold leading-tight">Appointment</h2>
-                    {/* <Link href="/admin/property/add" ><h2 className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Add Appointment</h2></Link> */}
                     <h2 onClick={()=>setOpen(true)} className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Broadcast</h2>
                 </div>
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -116,4 +102,4 @@ const Home = () => {
     )
 }
 
-export default PrivateRoute(Home)
+export default PrivateRoute(Appointment)

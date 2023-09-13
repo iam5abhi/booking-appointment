@@ -35,8 +35,11 @@ const Header = () => {
                         </li> 
                         : <>
                         <li>
-                            <Link href="/admin" className="block py-2 pl-3 pr-4 text-violet-950  rounded md:bg-transparent md:p-0 " aria-current="page">Leads</Link>
+                            <Link href="/admin" className="block py-2 pl-3 pr-4 text-violet-950  rounded md:bg-transparent md:p-0 " aria-current="page">Appointment</Link>
                         </li>
+                        <li>
+                            <Link href="/admin/details" className="block py-2 pl-3 pr-4 text-violet-950  rounded md:bg-transparent md:p-0 " aria-current="page">HomePage</Link>
+                        </li> 
                         <li>
                             <Link href="/admin/url" className="block py-2 pl-3 pr-4 text-violet-950  rounded md:bg-transparent md:p-0 " aria-current="page">Url</Link>
                         </li>

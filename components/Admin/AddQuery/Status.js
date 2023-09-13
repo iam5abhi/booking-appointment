@@ -7,7 +7,6 @@ function Status({setOpen,open,queries,id}) {
   const cancelButtonRef = useRef(null)
   const [formData,setFormData]=useState('')
 
-  console.log(formData)
   const StatusHandler = (event)=>{
     event.preventDefault();
     fetch("/api/appointment/status-appointment", { 
