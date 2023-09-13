@@ -1,16 +1,21 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import UserPrivateRoute from '../../PrivateRoute/UserPrivateRoute'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { userAuth } from '../../components/firebase/UserFirebase'
 
-const Appointmnet = () => {
+const Appointment = () => {
     const router = useRouter()
-  const [appointmnet,setAppointmnet]=useState()
+    const [appointmnet,setAppointmnet]=useState()
+    const [ user ] = useAuthState(userAuth);
 
     const getCategotyData = ()=>{
-        fetch("/api/appointment/get-appointment", { 
-            method: "GET",
+        fetch("/api/appointment/filter-appointment", { 
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
+          body: JSON.stringify({ phoneNumber:user.phoneNumber }),
           }).then((res) => {return res.json()}
           ).then((res) => setAppointmnet(res))
     }
@@ -81,4 +86,4 @@ const Appointmnet = () => {
   )
 }
 
-export default Appointmnet
+export default UserPrivateRoute(Appointment)
