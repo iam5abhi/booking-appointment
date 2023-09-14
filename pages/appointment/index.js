@@ -7,7 +7,9 @@ import { userAuth } from '../../components/firebase/UserFirebase'
 const Appointment = () => {
     const router = useRouter()
     const [appointmnet,setAppointmnet]=useState()
+    const [status,setStatus]=useState([])
     const [ user ] = useAuthState(userAuth);
+
 
     const getCategotyData = ()=>{
         fetch("/api/appointment/filter-appointment", { 
@@ -17,7 +19,11 @@ const Appointment = () => {
             },
           body: JSON.stringify({ phoneNumber:user.phoneNumber }),
           }).then((res) => {return res.json()}
-          ).then((res) => setAppointmnet(res))
+          ).then((res) => {
+            let status = res.map(data=>data.status)
+            setAppointmnet(res);
+            setStatus(status);
+          })
     }
 
     useEffect(() => {
@@ -29,7 +35,7 @@ const Appointment = () => {
           <div className="py-8">
               <div className='px-2 flex justify-between'>
                   <h2 className="text-2xl font-semibold leading-tight">Appointment</h2>
-                  <h2 onClick={()=>router.push('/appointment/add')} className="cursor-pointer text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1">Add Appointment</h2>
+                  <button type='button' disabled={status.includes("Booked")?true:false} onClick={()=>router.push('/appointment/add')} className={`text-lg font-semibold  leading-tight bg-gradient-to-r from-[#4216AA] to-[#F8AF0B] hover:bg-gradient-to-l shadow-md text-white rounded-full shadow px-5 py-1 ${status.includes("Booked")?'cursor-not-allowed opacity-50':'cursor-pointer'}`}>Add Appointment</button >
               </div>
               <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                   <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">

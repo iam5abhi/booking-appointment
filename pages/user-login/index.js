@@ -50,7 +50,7 @@ const App = () => {
       window.confirmationResult
         .confirm(otp)
         .then(async (res) => {
-          router.push('/')
+          router.back()
           setLoading(false);
         })
         .catch((err) => {
@@ -65,7 +65,7 @@ const App = () => {
       // maybe trigger a loadings screen
       return;
     }
-    if (user) router.push('/');
+    if (user) router.back();
   }, [user, loading]);
 
   return (
